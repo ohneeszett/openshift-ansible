@@ -1,7 +1,9 @@
 ---
 - assert:
-    that: "glusterfs_nodes | count >= 3"
-    msg: There must be at least three GlusterFS nodes specified
+    # that: "glusterfs_nodes | count >= 3"
+    # msg: There must be at least three GlusterFS nodes specified
+    that: "glusterfs_nodes | count >= 1"
+    msg: There must be at least one GlusterFS node specified
 
 - name: Delete pre-existing GlusterFS resources
   oc_obj:
@@ -86,6 +88,9 @@
     state: present
     files:
     - "{{ mktemp.stdout }}/glusterfs-template.yml"
+
+- debug:
+    msg: "Deploy Glusterfs pod on nodes matching {{ glusterfs_nodeselector }}"
 
 - name: Deploy GlusterFS pods
   oc_process:
