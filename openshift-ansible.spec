@@ -9,7 +9,7 @@
 %global __requires_exclude ^/usr/bin/ansible-playbook$
 
 Name:           openshift-ansible
-Version:        3.6.173.0.29
+Version:        3.6.173.0.45
 Release:        1%{?dist}
 Summary:        Openshift and Atomic Enterprise Ansible
 License:        ASL 2.0
@@ -280,6 +280,114 @@ Atomic OpenShift Utilities includes
 
 
 %changelog
+* Fri Sep 29 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.45-1
+- 
+
+* Thu Sep 28 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.44-1
+- 
+
+* Wed Sep 27 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.43-1
+- master: Default to false for l_bind_docker_reg_auth (smilner@redhat.com)
+- Fluentd: one output tag, one output plugin (nhosoi@redhat.com)
+- Generate aggregator api client config in temporary directory.
+  (abutcher@redhat.com)
+- make difference filter output a list for Python3 (jchaloup@redhat.com)
+- Fix registry_auth logic for upgrades (mgugino@redhat.com)
+
+* Fri Sep 22 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.41-1
+- 
+
+* Fri Sep 22 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.40-1
+- Remove default value for oreg_url (mgugino@redhat.com)
+- Switch to origin 3.6 repo (sdodson@redhat.com)
+- Support setting annotations on Hawkular route (hansmi@vshn.ch)
+- update env in etcd.conf.j2 to reflect the latest naming (jchaloup@redhat.com)
+- Update master config with new client urls during etcd scaleup.
+  (abutcher@redhat.com)
+
+* Wed Sep 20 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.39-1
+- 
+
+* Wed Sep 20 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.38-1
+- reverse order between router cert generation (mewt.fr@gmail.com)
+- double the required disk space for etcd backup (jchaloup@redhat.com)
+- Fix registry auth task ordering (mgugino@redhat.com)
+
+* Mon Sep 18 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.37-1
+- 
+
+* Mon Sep 18 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.36-1
+- 
+
+* Fri Sep 15 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.35-1
+- 
+
+* Fri Sep 15 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.34-1
+- Fix issue with etcd_common when using pre_upgrade tag (rteague@redhat.com)
+- Fix: authenticated registry support for containerized hosts
+  (mgugino@redhat.com)
+- Scaffold out the entire build defaults hash (tbielawa@redhat.com)
+- openshift-checks: add role symlink (lmeyer@redhat.com)
+- openshift_health_check: allow disabling all checks (lmeyer@redhat.com)
+- docker_image_availability: fix local image search (lmeyer@redhat.com)
+- docker_image_availability: probe registry connectivity (lmeyer@redhat.com)
+- openshift_checks: add retries in python (lmeyer@redhat.com)
+- Skip failure dedup instead of crashing (rhcarvalho@gmail.com)
+- output skopeo image check command (nakayamakenjiro@gmail.com)
+- openshift_checks aos_version: also check installed under yum
+  (lmeyer@redhat.com)
+- Import dnf only if importing yum fails (jhadvig@redhat.com)
+- openshift_checks: ignore hidden files in checks dir
+  (miciah.masters@gmail.com)
+- disk_availability: fix bug where msg is overwritten (lmeyer@redhat.com)
+- docker_image_availability: timeout skopeo inspect (lmeyer@redhat.com)
+- Update error message: s/non-unique/duplicate (rhcarvalho@gmail.com)
+- Make pylint disables more specific (rhcarvalho@gmail.com)
+- Handle exceptions in failure summary cb plugin (rhcarvalho@gmail.com)
+- Rewrite failure summary callback plugin (rhcarvalho@gmail.com)
+- Handle more exceptions when running checks (rhcarvalho@gmail.com)
+- List known checks/tags when check name is invalid (rhcarvalho@gmail.com)
+- List existing health checks when none is requested (rhcarvalho@gmail.com)
+- Add playbook for running arbitrary health checks (rhcarvalho@gmail.com)
+- etc_traffic check: factor away short_version (lmeyer@redhat.com)
+- openshift_checks: refactor find_ansible_mount (lmeyer@redhat.com)
+- openshift_checks: enable variable conversion (lmeyer@redhat.com)
+- openshift_checks: refactor logging checks (lmeyer@redhat.com)
+- openshift_checks: add property to track 'changed' (lmeyer@redhat.com)
+- add pre-flight checks to ugrade path (jvallejo@redhat.com)
+- double the required disk space for etcd backup (jchaloup@redhat.com)
+- Adding mangagement-admin SC to admin role for management-infra project
+  (ewolinet@redhat.com)
+
+* Wed Sep 13 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.33-1
+- 
+
+* Mon Sep 11 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.32-1
+- GlusterFS: Allow option to use or ignore default node selectors
+  (jarrpa@redhat.com)
+- elasticsearch: reintroduce readiness probe (jwozniak@redhat.com)
+
+* Fri Sep 08 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.31-1
+- logging set memory request to limit (jcantril@redhat.com)
+- Notice: CFME 4.5 tech preview is no longer supported or accepting updates
+  (tbielawa@redhat.com)
+- skip openshift_cfme_nfs_server if not using nfs (sdw35@cornell.edu)
+- Change default CFME namespace to use reserved openshift- prefix
+  (tbielawa@redhat.com)
+- nfs only run if cloud_provider not defined (sdw35@cornell.edu)
+- openshift_cfme: add nfs directory support (fsimonce@redhat.com)
+- Backport updated ansible_syntax checks (rteague@redhat.com)
+- Update calico to v2.5 (djosborne10@gmail.com)
+- Add independent registry auth support (mgugino@redhat.com)
+- Fix missing space in calico ansible roles (djosborne10@gmail.com)
+- Missing space (kp@tigera.io)
+- Clean up Calico readme (djosborne10@gmail.com)
+- Bump calico to v2.4.1 (djosborne10@gmail.com)
+- Use sdn_cluster_network_cidr as default calico pool (djosborne10@gmail.com)
+
+* Wed Sep 06 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.30-1
+- 
+
 * Fri Sep 01 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.29-1
 - 
 

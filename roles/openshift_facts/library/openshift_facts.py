@@ -1701,11 +1701,13 @@ def set_builddefaults_facts(facts):
             builddefaults['git_no_proxy'] = builddefaults['no_proxy']
         # If we're actually defining a builddefaults config then create admission_plugin_config
         # then merge builddefaults[config] structure into admission_plugin_config
+
+        # 'config' is the 'openshift_builddefaults_json' inventory variable
         if 'config' in builddefaults:
             if 'admission_plugin_config' not in facts['master']:
-                facts['master']['admission_plugin_config'] = dict()
+                # Scaffold out the full expected datastructure
+                facts['master']['admission_plugin_config'] = {'BuildDefaults': {'configuration': {'env': {}}}}
             facts['master']['admission_plugin_config'].update(builddefaults['config'])
-            # if the user didn't actually provide proxy values, delete the proxy env variable defaults.
             delete_empty_keys(facts['master']['admission_plugin_config']['BuildDefaults']['configuration']['env'])
 
     return facts
@@ -1802,7 +1804,9 @@ def set_container_facts_if_unset(facts):
     facts['common']['is_atomic'] = os.path.isfile('/run/ostree-booted')
     # If openshift_docker_use_system_container is set and is True ....
     if 'use_system_container' in list(facts['docker'].keys()):
-        if facts['docker']['use_system_container']:
+        # use safe_get_bool as the inventory variable may not be a
+        # valid boolean on it's own.
+        if safe_get_bool(facts['docker']['use_system_container']):
             # ... set the service name to container-engine
             facts['docker']['service_name'] = 'container-engine'
 
