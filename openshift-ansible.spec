@@ -9,7 +9,7 @@
 %global __requires_exclude ^/usr/bin/ansible-playbook$
 
 Name:           openshift-ansible
-Version:        3.6.173.0.45
+Version:        3.6.173.0.63
 Release:        1%{?dist}
 Summary:        Openshift and Atomic Enterprise Ansible
 License:        ASL 2.0
@@ -21,7 +21,12 @@ Requires:      ansible >= 2.2.2.0
 Requires:      python2
 Requires:      python-six
 Requires:      tar
-Requires:      openshift-ansible-docs = %{version}
+Requires:      %{name}-docs = %{version}
+Requires:      %{name}-playbooks = %{version}
+Requires:      %{name}-roles = %{version}
+Requires:      %{name}-filter-plugins = %{version}
+Requires:      %{name}-lookup-plugins = %{version}
+Requires:      %{name}-callback-plugins = %{version}
 Requires:      java-1.8.0-openjdk-headless
 Requires:      httpd-tools
 Requires:      libselinux-python
@@ -280,6 +285,98 @@ Atomic OpenShift Utilities includes
 
 
 %changelog
+* Mon Oct 30 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.63-1
+- 
+
+* Fri Oct 27 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.62-1
+- adding check to a yaml dump to work properly with new ruamel lib
+  (ihorvath@redhat.com)
+- [3.6] Add variable to control whether NetworkManager hook is installed
+  (hansmi@vshn.ch)
+- Backport 3.6 - Bug 1452939 - image update doc (jwozniak@redhat.com)
+- Bug 1491636 - honor ES ops node selector (jwozniak@redhat.com)
+- Make openshift-ansible depend on all subpackages (sdodson@redhat.com)
+
+* Thu Oct 26 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.61-1
+- 
+
+* Wed Oct 25 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.60-1
+- Update v3.6 content (sdodson@redhat.com)
+- Ensure proper variable templating for skopeo auth credentials
+  (mgugino@redhat.com)
+
+* Mon Oct 23 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.59-1
+- Default groups.oo_new_etcd_to_config to an empty list (jchaloup@redhat.com)
+- bug 1489498. preserve replica and shard settings (jcantril@redhat.com)
+- Use "requests" for CPU resources instead of limits
+  (peter.portante@redhat.com)
+
+* Fri Oct 20 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.58-1
+- Improve CA playbook restart logic and skip restarts when related services had
+  previously expired certificates. (abutcher@redhat.com)
+- Fix undefined variable for master upgrades (mgugino@redhat.com)
+- Ensuring that kube-service-catalog project has empty node-selector
+  (ewolinet@redhat.com)
+
+* Wed Oct 18 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.57-1
+- Ensure controllerConfig.serviceServingCert is correctly set during upgrade.
+  (abutcher@redhat.com)
+
+* Tue Oct 17 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.56-1
+- 
+
+* Tue Oct 17 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.55-1
+- 
+
+* Mon Oct 16 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.54-1
+- 
+
+* Mon Oct 16 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.53-1
+- 
+
+* Sat Oct 14 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.52-1
+- 
+
+* Fri Oct 13 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.51-1
+- 
+
+* Fri Oct 13 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.50-1
+- Don't install ASB by default in 3.6 (sdodson@redhat.com)
+- Ensure docker service status actually changes (mgugino@redhat.com)
+- Ensure host was reached for proper conditional validation
+  (rteague@redhat.com)
+
+* Wed Oct 11 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.49-1
+- Display warnings at the end of the control plane upgrade (sdodson@redhat.com)
+- Backport 3.6 - Bug 1452939 - change imagePullPolicy in logging and metrics
+  (jwozniak@redhat.com)
+- Add PartOf to docker systemd service unit. (mgugino@redhat.com)
+- Force reconciliation of role for 3.6 (simo@redhat.com)
+- Backport docker_image_availability checks (mgugino@redhat.com)
+- Add version_gte_3_7 facts (sdodson@redhat.com)
+
+* Mon Oct 09 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.48-1
+- Bug 1496271 - Perserve SCC for ES local persistent storage
+  (jcantril@redhat.com)
+
+* Fri Oct 06 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.47-1
+- Ensure docker is restarted when iptables is restarted (mgugino@redhat.com)
+- Ensure docker service started prior to credentials (mgugino@redhat.com)
+- logging: honor openshift_logging_es_cpu_limit (jwozniak@redhat.com)
+- Add --image flag to setup-openshift-heketi-storage (ttindell@isenpai.com)
+- Adding proxy env vars for dc/docker-registry (kwoodson@redhat.com)
+- Reference client binary from first master when generating aggregator signer
+  cert. (abutcher@redhat.com)
+- Fix origin repo deployment (mgugino@redhat.com)
+- Fix registry auth variable (mgugino@redhat.com)
+- Fixes #4809 (edu@redhat.com)
+- Set the etcd backend quota to 4GB by default (jchaloup@redhat.com)
+- evaluate etcd_backup_tag variable (jchaloup@redhat.com)
+- openshift_facts: coerce docker_use_system_container to bool
+  (smilner@redhat.com)
+- logging: fix kibana and kibana-ops defaults (jwozniak@redhat.com)
+- Miscellaneous fixes (lhuard@amadeus.com)
+
 * Fri Sep 29 2017 Jenkins CD Merge Bot <smunilla@redhat.com> 3.6.173.0.45-1
 - 
 

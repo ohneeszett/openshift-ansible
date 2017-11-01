@@ -3,6 +3,7 @@
 '''
 
 import random
+import re
 
 
 def es_storage(os_logging_facts, dc_name, pvc_claim, root='elasticsearch'):
@@ -15,6 +16,47 @@ def es_storage(os_logging_facts, dc_name, pvc_claim, root='elasticsearch'):
     if len(pvc_claim.strip()) > 0:
         return dict(kind='pvc', pvc_claim=pvc_claim)
     return dict(kind='emptydir')
+
+
+def min_cpu(left, right):
+    '''Return the minimum cpu value of the two values given'''
+    message = "Unable to evaluate {} cpu value is specified correctly '{}'. Exp whole, decimal or int followed by M"
+    pattern = re.compile(r"^(\d*\.?\d*)([Mm])?$")
+    millis_per_core = 1000
+    if not right:
+        return left
+    m_left = pattern.match(left)
+    if not m_left:
+        raise RuntimeError(message.format("left", left))
+    m_right = pattern.match(right)
+    if not m_right:
+        raise RuntimeError(message.format("right", right))
+    left_value = float(m_left.group(1))
+    right_value = float(m_right.group(1))
+    if m_left.group(2) not in ["M", "m"]:
+        left_value = left_value * millis_per_core
+    if m_right.group(2) not in ["M", "m"]:
+        right_value = right_value * millis_per_core
+    response = left
+    if left_value != min(left_value, right_value):
+        response = right
+    return response
+
+
+def walk(source, path, default, delimiter='.'):
+    '''Walk the sourch hash given the path and return the value or default if not found'''
+    if not isinstance(source, dict):
+        raise RuntimeError('The source is not a walkable dict: {} path: {}'.format(source, path))
+    keys = path.split(delimiter)
+    max_depth = len(keys)
+    cur_depth = 0
+    while cur_depth < max_depth:
+        if keys[cur_depth] in source:
+            source = source[keys[cur_depth]]
+            cur_depth = cur_depth + 1
+        else:
+            return default
+    return source
 
 
 def random_word(source_alpha, length):
@@ -56,5 +98,7 @@ class FilterModule(object):
             'random_word': random_word,
             'entry_from_named_pair': entry_from_named_pair,
             'map_from_pairs': map_from_pairs,
-            'es_storage': es_storage
+            'min_cpu': min_cpu,
+            'es_storage': es_storage,
+            'walk': walk
         }
